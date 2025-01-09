@@ -1,0 +1,6 @@
+@DotnetWebapiStencil_HostAddress = http://localhost:5278
+
+GET {{DotnetWebapiStencil_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
