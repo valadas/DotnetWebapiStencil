@@ -1,3 +1,5 @@
-.vs/
-obj/
-bin/
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/DotnetWebapiStencil/config/applicationhost.config
