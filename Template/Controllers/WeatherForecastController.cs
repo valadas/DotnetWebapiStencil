@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetWebapiStencil.Controllers
 {
+    /// <summary>
+    /// Provides REST APIs for weather forecasts.
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -13,11 +16,19 @@ namespace DotnetWebapiStencil.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WeatherForecastController"/> class.
+        /// </summary>
+        /// <param name="logger">The logger to use.</param>
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
         }
 
+        /// <summary>
+        /// Gets the weather forecast.
+        /// </summary>
+        /// <returns><see cref="WeatherForecast"/>.</returns>
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
