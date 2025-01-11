@@ -8,6 +8,7 @@ using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
@@ -34,7 +35,9 @@ class Build : NukeBuild
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     [Solution] readonly Solution Solution;
-    
+
+    [GitVersion] readonly GitVersion GitVersion;
+
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
     Target Clean => _ => _
@@ -60,6 +63,9 @@ class Build : NukeBuild
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
                 .EnableNoRestore()
+                .SetVersion(GitVersion.FullSemVer)
+                .SetInformationalVersion(GitVersion.InformationalVersion)
+                .SetAssemblyVersion(GitVersion.AssemblySemVer)
             );
         });
 
@@ -74,6 +80,9 @@ class Build : NukeBuild
                 .SetOutputDirectory(ArtifactsDirectory)
                 .EnableNoBuild()
                 .DisableTreatWarningsAsErrors()
+                .SetVersion(GitVersion.FullSemVer)
+                .SetInformationalVersion(GitVersion.InformationalVersion)
+                .SetAssemblyVersion(GitVersion.AssemblySemVer)
             );
             DotNetTasks.DotNetPack(s => s
                 .SetProject(Solution.GetProject("StencilMiddleware"))
@@ -81,6 +90,9 @@ class Build : NukeBuild
                 .SetOutputDirectory(ArtifactsDirectory)
                 .EnableNoBuild()
                 .DisableTreatWarningsAsErrors()
+                .SetVersion(GitVersion.FullSemVer)
+                .SetInformationalVersion(GitVersion.InformationalVersion)
+                .SetAssemblyVersion(GitVersion.AssemblySemVer)
             );
         });
 
