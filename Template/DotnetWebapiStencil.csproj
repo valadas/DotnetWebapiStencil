@@ -38,12 +38,12 @@
 
   <Target Name="NpmInstall" BeforeTargets="Build">
 	<Message Text="Running npm install..." Importance="high" />
-	<Exec Command="npm install" WorkingDirectory="wwwroot/www" />
+	<Exec Command="npm install" WorkingDirectory="wwwroot" />
   </Target>
 
 	<Target Name="NpmBuild" AfterTargets="NpmInstall" Condition="'$(Configuration)' == 'Release'">
 	  <Message Text="Running npm run build..." Importance="high" />
-	  <Exec Command="npm run build" WorkingDirectory="wwwroot/www" />
+	  <Exec Command="npm run build" WorkingDirectory="wwwroot" />
 	</Target>
 
 </Project>
