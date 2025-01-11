@@ -10,6 +10,7 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
@@ -71,8 +72,19 @@ class Build : NukeBuild
             );
         });
 
+    Target LogInfo => _ => _
+        .Executes(() =>
+        {
+            var versionInfo = GitVersion.ToJson(formatting: Newtonsoft.Json.Formatting.Indented);
+            Serilog.Log.Information("Version Info: {VersionInfo}", versionInfo);
+
+            var repositoryInfo = GitRepository.ToJson(formatting: Newtonsoft.Json.Formatting.Indented);
+            Serilog.Log.Information("Repository Info: {RepositoryInfo}", repositoryInfo);
+        });
+
     Target Compile => _ => _
         .DependsOn(Restore)
+        .DependsOn(LogInfo)
         .Executes(() =>
         {
             DotNetTasks.DotNetBuild(s => s
@@ -91,7 +103,7 @@ class Build : NukeBuild
         .Produces(ArtifactsDirectory / "*.nupkg")
         .Executes(() =>
         {
-            Serilog.Log.Information("Packaging version {Version}", GitVersion.NuGetVersionV2);
+            Serilog.Log.Information("Packaging version {Version}", GitVersion.SemVer);
             DotNetTasks.DotNetPack(s => s
                 .SetProject(Solution.GetProject("DotnetWebapiStencil"))
                 .SetConfiguration(Configuration)
@@ -101,7 +113,7 @@ class Build : NukeBuild
                 .SetVersion(GitVersion.NuGetVersionV2)
             );
 
-            Serilog.Log.Information("Packaging version {Version}", GitVersion.NuGetVersionV2);
+            Serilog.Log.Information("Packaging version {Version}", GitVersion.SemVer);
             DotNetTasks.DotNetPack(s => s
                 .SetProject(Solution.GetProject("StencilMiddleware"))
                 .SetConfiguration(Configuration)
