@@ -10,8 +10,8 @@ describe('my-component', () => {
     expect(root).toEqualHtml(`
       <my-component>
         <mock:shadow-root>
-          <div>
-            Hello, World! I'm
+          <div class="surface">
+            <p>Hello, World! I'm</p>
           </div>
         </mock:shadow-root>
       </my-component>

@@ -1,9 +1,9 @@
 namespace DotnetWebapiStencil
 {
     using Eraware.StencilExtensions;
+    using Microsoft.Extensions.FileProviders;
     using Microsoft.OpenApi.Models;
     using Microsoft.OpenApi.Writers;
-    using NSwag.AspNetCore;
     using NSwag.CodeGeneration.TypeScript;
     using Swashbuckle.AspNetCore.Swagger;
     using System.Reflection;
@@ -33,26 +33,37 @@ namespace DotnetWebapiStencil
 
         internal static void ConfigureApp(WebApplication app)
         {
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 GenerateTypescriptClient(app);
                 app.UseSwagger();
                 app.UseSwaggerUI();
-                app.UseSpa(spa =>
-                {
-                    spa.Options.SourcePath = "wwwroot/www";
-                    if (app.Environment.IsDevelopment())
-                    {
-                        spa.UseStencilDevelopmentServer("start");
-                    }
-                });
             }
 
             app.UseHttpsRedirection();
+            app.UseRouting();
             app.UseAuthorization();
-            app.MapControllers();
+#pragma warning disable ASP0014 // Suggest using top level route registrations
+            app.UseEndpoints(c => c.MapDefaultControllerRoute());
+#pragma warning restore ASP0014 // Suggest using top level route registrations
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSpa(spa =>
+                {
+                    spa.Options.SourcePath = "wwwroot/www";
+                    spa.UseStencilDevelopmentServer();
+                });
+            }
+            else
+            {
+                app.UseStaticFiles(new StaticFileOptions
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "wwwroot/www")),
+                    RequestPath = "",
+                });
+            }
         }
 
         private static void GenerateTypescriptClient(WebApplication app)
@@ -65,21 +76,31 @@ namespace DotnetWebapiStencil
             var swaggerJson = stringWriter.ToString();
             var nswagDocument = NSwag.OpenApiDocument.FromJsonAsync(swaggerJson).Result;
 
-            var generatorSettings = new TypeScriptClientGeneratorSettings
+            foreach (var controller in nswagDocument.Operations.GroupBy(o => o.Operation.Tags.FirstOrDefault()))
             {
-                ClassName = "ApiClient",
-                Template = TypeScriptTemplate.Fetch,
-            };
+                if (controller.Key is null)
+                {
+                    continue;
+                }
 
-            var generator = new TypeScriptClientGenerator(nswagDocument, generatorSettings);
-            var clientCode = generator.GenerateFile();
+                var generatorSettings = new TypeScriptClientGeneratorSettings
+                {
+                    ClassName = $"{controller.Key}Client", // Name the client based on the controller
+                    Template = TypeScriptTemplate.Fetch,
+                };
 
-            var sourceCodePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../"));
-            var fileName = Path.Combine("api-client.ts");
-            var outputDir = Path.Combine(sourceCodePath, "wwwroot", "src", "services", "api-clients");
-            var path = Path.Combine(outputDir, fileName);
-            Directory.CreateDirectory(outputDir);
-            File.WriteAllText(path, clientCode);
+                var generator = new TypeScriptClientGenerator(nswagDocument, generatorSettings);
+                var clientCode = generator.GenerateFile();
+
+                var sourceCodePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../"));
+                var fileName = Path.Combine($"{controller.Key}Client.ts");
+                var outputDir = Path.Combine(sourceCodePath, "wwwroot", "src", "services", "api-clients");
+                var path = Path.Combine(outputDir, fileName);
+                Directory.CreateDirectory(outputDir);
+                File.WriteAllText(path, clientCode);
+            }
+
+
         }
     }
 }

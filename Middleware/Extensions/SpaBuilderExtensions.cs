@@ -12,6 +12,12 @@ namespace Eraware.StencilExtensions
         private static bool isStencilDevServerReady = false; // Flag to avoid redundant readiness checks
         private static readonly object lockObj = new object(); // Lock for thread safety
 
+        /// <summary>
+        /// Uses the stencil development server.
+        /// </summary>
+        /// <param name="spa">The spa pipeline to extend.</param>
+        /// <param name="npmScript">The NPM script to start (watch) the dev server.</param>
+        /// <param name="sourcePath">The source path where to run the npm script.</param>
         public static void UseStencilDevelopmentServer(this ISpaBuilder spa, string npmScript = "start", string sourcePath = "wwwroot")
         {
             var app = spa.ApplicationBuilder;

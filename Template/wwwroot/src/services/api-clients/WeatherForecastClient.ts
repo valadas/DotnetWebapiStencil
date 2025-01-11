@@ -8,7 +8,7 @@
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
-export class ApiClient {
+export class WeatherForecastClient {
     private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -22,8 +22,8 @@ export class ApiClient {
      * Gets the weather forecast.
      * @return OK
      */
-    getWeatherForecast(): Promise<WeatherForecast[]> {
-        let url_ = this.baseUrl + "/WeatherForecast";
+    get(): Promise<WeatherForecast[]> {
+        let url_ = this.baseUrl + "/api/WeatherForecast/Get";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
@@ -34,11 +34,11 @@ export class ApiClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetWeatherForecast(_response);
+            return this.processGet(_response);
         });
     }
 
-    protected processGetWeatherForecast(response: Response): Promise<WeatherForecast[]> {
+    protected processGet(response: Response): Promise<WeatherForecast[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {

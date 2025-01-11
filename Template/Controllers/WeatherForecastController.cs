@@ -6,7 +6,7 @@ namespace DotnetWebapiStencil.Controllers
     /// Provides REST APIs for weather forecasts.
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/WeatherForecast")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -29,7 +29,7 @@ namespace DotnetWebapiStencil.Controllers
         /// Gets the weather forecast.
         /// </summary>
         /// <returns><see cref="WeatherForecast"/>.</returns>
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet("Get")]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
