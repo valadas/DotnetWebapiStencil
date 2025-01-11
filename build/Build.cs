@@ -17,8 +17,8 @@ using static Nuke.Common.IO.PathConstruction;
 [GitHubActions(
     "continuous",
     GitHubActionsImage.UbuntuLatest,
-    OnPushBranches = new[] { "main", "develop" },
-    OnPullRequestBranches = new[] { "main", "develop" },
+    OnPushBranches = new[] { "main", "develop", "release/*" },
+    OnPullRequestBranches = new[] { "main", "develop", "release/*" },
     InvokedTargets = new[] { nameof(CI) },
     FetchDepth = 0)]
 [GitHubActions(
