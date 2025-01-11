@@ -4,11 +4,13 @@ using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Execution;
+using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
@@ -17,17 +19,21 @@ using static Nuke.Common.IO.PathConstruction;
 [GitHubActions(
     "continuous",
     GitHubActionsImage.UbuntuLatest,
-    OnPushBranches = new[] { "main", "develop" },
-    OnPullRequestBranches = new[] { "main", "develop" },
+    OnPushBranches = new[] { "main", "develop", "release/*" },
+    OnPullRequestBranches = new[] { "main", "develop", "release/*" },
     InvokedTargets = new[] { nameof(CI) },
-    FetchDepth = 0)]
+    FetchDepth = 0,
+    PublishArtifacts = true,
+    CacheKeyFiles = new string[] { })]
 [GitHubActions(
     "publish",
     GitHubActionsImage.UbuntuLatest,
     OnPushTags = new[] { "v*" },
     InvokedTargets = new[] { nameof(Publish) },
     ImportSecrets = new[] { "NUGET_API_KEY" },
-    FetchDepth = 0)]
+    FetchDepth = 0,
+    PublishArtifacts = true,
+    CacheKeyFiles = new string[] { })]
 class Build : NukeBuild
 {
     /// Support plugins are available for:
@@ -42,7 +48,7 @@ class Build : NukeBuild
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     [Solution] readonly Solution Solution;
-
+    [GitRepository] GitRepository GitRepository;
     [GitVersion] readonly GitVersion GitVersion;
 
     [Parameter("NuGet API Key")]
@@ -66,8 +72,19 @@ class Build : NukeBuild
             );
         });
 
+    Target LogInfo => _ => _
+        .Executes(() =>
+        {
+            var versionInfo = GitVersion.ToJson(formatting: Newtonsoft.Json.Formatting.Indented);
+            Serilog.Log.Information("Version Info: {VersionInfo}", versionInfo);
+
+            var repositoryInfo = GitRepository.ToJson(formatting: Newtonsoft.Json.Formatting.Indented);
+            Serilog.Log.Information("Repository Info: {RepositoryInfo}", repositoryInfo);
+        });
+
     Target Compile => _ => _
         .DependsOn(Restore)
+        .DependsOn(LogInfo)
         .Executes(() =>
         {
             DotNetTasks.DotNetBuild(s => s
@@ -86,6 +103,7 @@ class Build : NukeBuild
         .Produces(ArtifactsDirectory / "*.nupkg")
         .Executes(() =>
         {
+            Serilog.Log.Information("Packaging version {Version}", GitVersion.SemVer);
             DotNetTasks.DotNetPack(s => s
                 .SetProject(Solution.GetProject("DotnetWebapiStencil"))
                 .SetConfiguration(Configuration)
@@ -94,6 +112,8 @@ class Build : NukeBuild
                 .DisableTreatWarningsAsErrors()
                 .SetVersion(GitVersion.NuGetVersionV2)
             );
+
+            Serilog.Log.Information("Packaging version {Version}", GitVersion.SemVer);
             DotNetTasks.DotNetPack(s => s
                 .SetProject(Solution.GetProject("StencilMiddleware"))
                 .SetConfiguration(Configuration)
