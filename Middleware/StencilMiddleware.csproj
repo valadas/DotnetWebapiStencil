@@ -7,6 +7,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+	<PackageId>Eraware.StencilExtensions</PackageId>
+	<Version>0.1.0</Version>
+	<Authors>Daniel Valadas</Authors>
+	<Description>Extentions to use Stencil.js in dotnet SPA middleware.</Description>
+	<PackageTags>stencil,stenciljs,dotnet,dotnetcore,spa,middleware</PackageTags>
+	<RepositoryUrl>https://github.com/valadas/DotnetWebapiStencil</RepositoryUrl>
+	<LicenseUrl>https://opensource.org/licenses/MIT</LicenseUrl>
+	<OutputType>Library</OutputType>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="8.0.11" />

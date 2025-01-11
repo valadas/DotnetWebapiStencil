@@ -9,6 +9,19 @@
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup>
+	<PackageId>Eraware.StencilWebApiTemplate</PackageId>
+	<Version>0.1.0</Version>
+	<Authors>string</Authors>
+	<Description>Dotnet WebAPI template that uses Stencil.js for the frontend.</Description>
+	<PackageTags>stencil,stenciljs,dotnet,dotnetcore,spa,webapi, template</PackageTags>
+	<RepositoryUrl>https://github.com/valadas/DotnetWebapiStencil</RepositoryUrl>
+	<LicenseUrl>https://opensource.org/licenses/MIT</LicenseUrl>
+	<PackAsTool>false</PackAsTool>
+	<IsPackable>true</IsPackable>
+	<PackageType>Template</PackageType>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="8.0.11" />
     <PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
@@ -22,5 +35,15 @@
   <ItemGroup Condition="Exists('..\Middleware\StencilMiddleware.csproj')">
     <ProjectReference Include="..\Middleware\StencilMiddleware.csproj" />
   </ItemGroup>
+
+  <Target Name="NpmInstall" BeforeTargets="Build">
+	<Message Text="Running npm install..." Importance="high" />
+	<Exec Command="npm install" WorkingDirectory="wwwroot/www" />
+  </Target>
+
+	<Target Name="NpmBuild" AfterTargets="NpmInstall" Condition="'$(Configuration)' == 'Release'">
+	  <Message Text="Running npm run build..." Importance="high" />
+	  <Exec Command="npm run build" WorkingDirectory="wwwroot/www" />
+	</Target>
 
 </Project>

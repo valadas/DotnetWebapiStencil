@@ -7,13 +7,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetWebapiStencil", "Temp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StencilMiddleware", "Middleware\StencilMiddleware.csproj", "{3CAC5943-3CF1-4568-A454-C4A48E4A02A0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D33DD04B-AA9A-4B9D-8D83-D06DB5EA84B1}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{D156A9D4-8CE4-42E2-8493-F2CF29D280C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{22A7A2E6-CFD9-4B18-82E4-C6746F84495A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -24,5 +29,10 @@ Global
 		{3CAC5943-3CF1-4568-A454-C4A48E4A02A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CAC5943-3CF1-4568-A454-C4A48E4A02A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CAC5943-3CF1-4568-A454-C4A48E4A02A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D156A9D4-8CE4-42E2-8493-F2CF29D280C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D156A9D4-8CE4-42E2-8493-F2CF29D280C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
