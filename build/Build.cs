@@ -19,7 +19,12 @@ using static Nuke.Common.IO.PathConstruction;
     GitHubActionsImage.UbuntuLatest,
     OnPushBranches = new[] { "main", "develop" },
     OnPullRequestBranches = new[] { "main", "develop" },
-    InvokedTargets = new[] { nameof(CI) },
+    InvokedTargets = new[] { nameof(CI) })]
+[GitHubActions(
+    "publish",
+    GitHubActionsImage.UbuntuLatest,
+    OnPushTags = new[] { "v*" },
+    InvokedTargets = new[] { nameof(Publish) },
     ImportSecrets = new[] { "NUGET_API_KEY" })]
 class Build : NukeBuild
 {
@@ -37,6 +42,10 @@ class Build : NukeBuild
     [Solution] readonly Solution Solution;
 
     [GitVersion] readonly GitVersion GitVersion;
+
+    [Parameter("NuGet API Key")]
+    [Secret]
+    readonly string NuGetApiKey;
 
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
@@ -72,6 +81,7 @@ class Build : NukeBuild
     Target Pack => _ => _
         .DependsOn(Clean)
         .DependsOn(Compile)
+        .Produces(ArtifactsDirectory / "*.nupkg")
         .Executes(() =>
         {
             DotNetTasks.DotNetPack(s => s
@@ -80,9 +90,7 @@ class Build : NukeBuild
                 .SetOutputDirectory(ArtifactsDirectory)
                 .EnableNoBuild()
                 .DisableTreatWarningsAsErrors()
-                .SetVersion(GitVersion.FullSemVer)
-                .SetInformationalVersion(GitVersion.InformationalVersion)
-                .SetAssemblyVersion(GitVersion.AssemblySemVer)
+                .SetVersion(GitVersion.NuGetVersionV2)
             );
             DotNetTasks.DotNetPack(s => s
                 .SetProject(Solution.GetProject("StencilMiddleware"))
@@ -90,14 +98,22 @@ class Build : NukeBuild
                 .SetOutputDirectory(ArtifactsDirectory)
                 .EnableNoBuild()
                 .DisableTreatWarningsAsErrors()
-                .SetVersion(GitVersion.FullSemVer)
-                .SetInformationalVersion(GitVersion.InformationalVersion)
-                .SetAssemblyVersion(GitVersion.AssemblySemVer)
+                .SetVersion(GitVersion.NuGetVersionV2)
             );
         });
 
     Target CI => _ => _
         .DependsOn(Clean)
-        .DependsOn(Pack)
-        .Produces(ArtifactsDirectory);
+        .DependsOn(Pack);
+
+    Target Publish => _ => _
+        .DependsOn(CI)
+        .Executes(() =>
+        {
+            DotNetTasks.DotNetNuGetPush(s => s
+                 .SetTargetPath(ArtifactsDirectory / "*.nupkg")
+                 .SetSource("https://api.nuget.org/v3/index.json")
+                 .SetApiKey(NuGetApiKey)
+             );
+        });
 }
