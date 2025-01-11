@@ -86,6 +86,7 @@ class Build : NukeBuild
         .Produces(ArtifactsDirectory / "*.nupkg")
         .Executes(() =>
         {
+            Serilog.Log.Information("Packaging version {Version}", GitVersion.NuGetVersionV2);
             DotNetTasks.DotNetPack(s => s
                 .SetProject(Solution.GetProject("DotnetWebapiStencil"))
                 .SetConfiguration(Configuration)
@@ -94,6 +95,8 @@ class Build : NukeBuild
                 .DisableTreatWarningsAsErrors()
                 .SetVersion(GitVersion.NuGetVersionV2)
             );
+
+            Serilog.Log.Information("Packaging version {Version}", GitVersion.NuGetVersionV2);
             DotNetTasks.DotNetPack(s => s
                 .SetProject(Solution.GetProject("StencilMiddleware"))
                 .SetConfiguration(Configuration)
