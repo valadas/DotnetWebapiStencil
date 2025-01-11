@@ -19,13 +19,15 @@ using static Nuke.Common.IO.PathConstruction;
     GitHubActionsImage.UbuntuLatest,
     OnPushBranches = new[] { "main", "develop" },
     OnPullRequestBranches = new[] { "main", "develop" },
-    InvokedTargets = new[] { nameof(CI) })]
+    InvokedTargets = new[] { nameof(CI) },
+    FetchDepth = 0)]
 [GitHubActions(
     "publish",
     GitHubActionsImage.UbuntuLatest,
     OnPushTags = new[] { "v*" },
     InvokedTargets = new[] { nameof(Publish) },
-    ImportSecrets = new[] { "NUGET_API_KEY" })]
+    ImportSecrets = new[] { "NUGET_API_KEY" },
+    FetchDepth = 0)]
 class Build : NukeBuild
 {
     /// Support plugins are available for:
