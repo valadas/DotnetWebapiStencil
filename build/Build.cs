@@ -4,6 +4,7 @@ using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Execution;
+using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
@@ -20,14 +21,18 @@ using static Nuke.Common.IO.PathConstruction;
     OnPushBranches = new[] { "main", "develop", "release/*" },
     OnPullRequestBranches = new[] { "main", "develop", "release/*" },
     InvokedTargets = new[] { nameof(CI) },
-    FetchDepth = 0)]
+    FetchDepth = 0,
+    PublishArtifacts = true,
+    CacheKeyFiles = new string[] { })]
 [GitHubActions(
     "publish",
     GitHubActionsImage.UbuntuLatest,
     OnPushTags = new[] { "v*" },
     InvokedTargets = new[] { nameof(Publish) },
     ImportSecrets = new[] { "NUGET_API_KEY" },
-    FetchDepth = 0)]
+    FetchDepth = 0,
+    PublishArtifacts = true,
+    CacheKeyFiles = new string[] { })]
 class Build : NukeBuild
 {
     /// Support plugins are available for:
@@ -42,7 +47,7 @@ class Build : NukeBuild
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     [Solution] readonly Solution Solution;
-
+    [GitRepository] GitRepository GitRepository;
     [GitVersion] readonly GitVersion GitVersion;
 
     [Parameter("NuGet API Key")]
