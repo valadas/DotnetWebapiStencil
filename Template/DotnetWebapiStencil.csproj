@@ -29,6 +29,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include=".template.config/**" Pack="true" />
+  </ItemGroup>
+
   <ItemGroup Condition="!Exists('..\Middleware\StencilMiddleware.csproj')">
     <PackageReference Include="Eraware.DotnetStencilMiddleware" Version="1.0.0" />
   </ItemGroup>
@@ -41,9 +45,9 @@
 	<Exec Command="npm install" WorkingDirectory="wwwroot" />
   </Target>
 
-	<Target Name="NpmBuild" AfterTargets="NpmInstall" Condition="'$(Configuration)' == 'Release'">
-	  <Message Text="Running npm run build..." Importance="high" />
-	  <Exec Command="npm run build" WorkingDirectory="wwwroot" />
-	</Target>
+  <Target Name="NpmBuild" AfterTargets="NpmInstall" Condition="'$(Configuration)' == 'Release'">
+	<Message Text="Running npm run build..." Importance="high" />
+	<Exec Command="npm run build" WorkingDirectory="wwwroot" />
+  </Target>
 
 </Project>
