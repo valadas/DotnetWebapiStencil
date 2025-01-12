@@ -30,7 +30,21 @@
         "target": "./",
         "rename": {
           "TemplateNamespace": "{ProjectName}"
-        }
+        },
+        "exclude": [
+          ".template.config/**/*",
+          ".vs",
+          "**/[Bb]in/**",
+          "**/[Oo]bj/**",
+          "**/*.filelist",
+          "**/*.user",
+          "**/*.lock.json",
+          "wwwroot/.stencil/**",
+          "wwwroot/dist/**",
+          "wwwroot/loader/**",
+          "wwwroot/node_modules/**",
+          "wwwroot/www"
+        ]
       }
     ]
   }

@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="!Exists('..\Middleware\StencilMiddleware.csproj')">
-    <PackageReference Include="Eraware.DotnetStencilMiddleware" Version="1.0.0" />
+    <PackageReference Include="Eraware.StencilExtensions" Version="0.2.0"/>
   </ItemGroup>
   <ItemGroup Condition="Exists('..\Middleware\StencilMiddleware.csproj')">
     <ProjectReference Include="..\Middleware\StencilMiddleware.csproj" />
