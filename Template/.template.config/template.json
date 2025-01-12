@@ -6,7 +6,11 @@
     "name": "Webapi with stencil starter template",
     "shortName": "webapi-stencil-starter",
     "sourceName": "DotnetWebapiStencil",
-    "defaultName": "StarterProject",
+    "defaultName": "StencilStarterProject",
+    "tags": {
+      "language": "C#",
+      "type": "project"
+    },
     "symbols": {
       "ProjectName": {
         "type": "parameter",
@@ -15,6 +19,11 @@
         "defaultValue": "MyProject"
       }
     },
+    "primaryOutputs": [
+      {
+        "path": "DotnetWebapiStencil.csproj"
+      }
+    ],
     "sources": [
       {
         "source": "./",
