@@ -28,7 +28,7 @@ using static Nuke.Common.IO.PathConstruction;
 [GitHubActions(
     "publish",
     GitHubActionsImage.UbuntuLatest,
-    OnPushTags = new[] { "v*" },
+    OnPushBranches = new[] { "main", "release/*" },
     InvokedTargets = new[] { nameof(Publish) },
     ImportSecrets = new[] { "NUGET_API_KEY" },
     FetchDepth = 0,
@@ -49,7 +49,7 @@ class Build : NukeBuild
 
     [Solution] readonly Solution Solution;
     [GitRepository] GitRepository GitRepository;
-    [GitVersion] readonly GitVersion GitVersion;
+    [GitVersion(NoFetch = false)] readonly GitVersion GitVersion;
 
     [Parameter("NuGet API Key")]
     [Secret]
@@ -110,7 +110,9 @@ class Build : NukeBuild
                 .SetOutputDirectory(ArtifactsDirectory)
                 .EnableNoBuild()
                 .DisableTreatWarningsAsErrors()
-                .SetVersion(GitVersion.NuGetVersionV2)
+                .SetVersion(GitVersion.SemVer)
+                .SetAssemblyVersion(GitVersion.AssemblySemVer)
+                .SetFileVersion(GitVersion.AssemblySemFileVer)
             );
 
             Serilog.Log.Information("Packaging version {Version}", GitVersion.SemVer);
@@ -120,7 +122,9 @@ class Build : NukeBuild
                 .SetOutputDirectory(ArtifactsDirectory)
                 .EnableNoBuild()
                 .DisableTreatWarningsAsErrors()
-                .SetVersion(GitVersion.NuGetVersionV2)
+                .SetVersion(GitVersion.SemVer)
+                .SetAssemblyVersion(GitVersion.AssemblySemVer)
+                .SetFileVersion(GitVersion.AssemblySemFileVer)
             );
         });
 
