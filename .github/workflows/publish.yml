@@ -18,8 +18,9 @@ name: publish
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
+      - 'release/*'
 
 jobs:
   ubuntu-latest:
