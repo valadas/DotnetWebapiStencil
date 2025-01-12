@@ -6,7 +6,11 @@
     "name": "Webapi with stencil starter template",
     "shortName": "webapi-stencil-starter",
     "sourceName": "DotnetWebapiStencil",
-    "defaultName": "StarterProject",
+    "defaultName": "StencilStarterProject",
+    "tags": {
+      "language": "C#",
+      "type": "project"
+    },
     "symbols": {
       "ProjectName": {
         "type": "parameter",
@@ -15,13 +19,32 @@
         "defaultValue": "MyProject"
       }
     },
+    "primaryOutputs": [
+      {
+        "path": "DotnetWebapiStencil.csproj"
+      }
+    ],
     "sources": [
       {
         "source": "./",
         "target": "./",
         "rename": {
           "TemplateNamespace": "{ProjectName}"
-        }
+        },
+        "exclude": [
+          ".template.config/**/*",
+          ".vs",
+          "**/[Bb]in/**",
+          "**/[Oo]bj/**",
+          "**/*.filelist",
+          "**/*.user",
+          "**/*.lock.json",
+          "wwwroot/.stencil/**",
+          "wwwroot/dist/**",
+          "wwwroot/loader/**",
+          "wwwroot/node_modules/**",
+          "wwwroot/www"
+        ]
       }
     ]
   }
