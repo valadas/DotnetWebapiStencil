@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup>
+    <PackageType>Template</PackageType>
+    <PackageVersion>1.0.0</PackageVersion>
+    <PackageId>Eraware.StencilWebApiTemplate</PackageId>
+    <Authors>Daniel Valadas</Authors>
+    <PackageTags>stencil,stenciljs,dotnet,dotnetcore,spa,webapi, template</PackageTags>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <TargetFrameworks>net8.0</TargetFrameworks>
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <NoDefaultExcludes>true</NoDefaultExcludes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/valadas/DotnetWebapiStencil</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryBranch>main</RepositoryBranch>
+   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="WebApiStencil\**\*" />
+    <Content Remove="WebApiStencil\**\*.csproj.user" />
+    <Content Remove="WebApiStencil\**\bin\**" />
+    <Content Remove="WebApiStencil\**\obj\**" />
+    <Content Remove="WebApiStencil\**\.vs\**" />
+    <Content Remove="WebApiStencil\**\.git\**" />
+    <Content Remove="WebApiStencil\wwwroot\package-lock.json" />
+    <Content Remove="WebApiStencil\wwwroot\.stencil\**" />
+    <Content Remove="WebApiStencil\wwwroot\dist\**" />
+    <Content Remove="WebApiStencil\wwwroot\loader\**" />
+    <Content Remove="WebApiStencil\wwwroot\node_modules\**" />
+    <Content Remove="WebApiStencil\wwwroot\www\**" />
+    <Compile Remove="**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <Content Include="WebApiStencil\readme.md">
+        <Pack>true</Pack>
+        <PackagePath>readme.md</PackagePath>
+      </Content>
+  </ItemGroup>
+
+</Project>

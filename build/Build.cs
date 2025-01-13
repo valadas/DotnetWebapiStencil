@@ -105,7 +105,7 @@ class Build : NukeBuild
         {
             Serilog.Log.Information("Packaging version {Version}", GitVersion.SemVer);
             DotNetTasks.DotNetPack(s => s
-                .SetProject(Solution.GetProject("DotnetWebapiStencil"))
+                .SetProject(Solution.GetProject("dotnet.template.pack"))
                 .SetConfiguration(Configuration)
                 .SetOutputDirectory(ArtifactsDirectory)
                 .EnableNoBuild()
@@ -113,6 +113,7 @@ class Build : NukeBuild
                 .SetVersion(GitVersion.SemVer)
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
+                .SetProperty("PackageVersion", GitVersion.SemVer)
             );
 
             Serilog.Log.Information("Packaging version {Version}", GitVersion.SemVer);
@@ -125,6 +126,7 @@ class Build : NukeBuild
                 .SetVersion(GitVersion.SemVer)
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
+                .SetProperty("PackageVersion", GitVersion.SemVer)
             );
         });
 

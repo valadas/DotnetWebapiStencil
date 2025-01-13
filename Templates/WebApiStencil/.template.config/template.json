@@ -43,7 +43,7 @@
           "wwwroot/dist/**",
           "wwwroot/loader/**",
           "wwwroot/node_modules/**",
-          "wwwroot/www"
+          "wwwroot/www/**"
         ]
       }
     ]
