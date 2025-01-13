@@ -3,23 +3,11 @@
     <RootNamespace>DotnetWebapiStencil</RootNamespace>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
-	<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+	  <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <ImplicitUsings>enable</ImplicitUsings>
-	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	<GenerateDocumentationFile>true</GenerateDocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup>
-	<PackageId>Eraware.StencilWebApiTemplate</PackageId>
-	<Version>0.1.0</Version>
-	<Authors>string</Authors>
-	<Description>Dotnet WebAPI template that uses Stencil.js for the frontend.</Description>
-	<PackageTags>stencil,stenciljs,dotnet,dotnetcore,spa,webapi, template</PackageTags>
-	<RepositoryUrl>https://github.com/valadas/DotnetWebapiStencil</RepositoryUrl>
-	<LicenseUrl>https://opensource.org/licenses/MIT</LicenseUrl>
-	<PackAsTool>false</PackAsTool>
-	<IsPackable>true</IsPackable>
-	<PackageType>Template</PackageType>
+	  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackAsTool>false</PackAsTool>
   </PropertyGroup>
 
   <ItemGroup>
