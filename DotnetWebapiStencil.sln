@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetWebapiStencil", "Template\DotnetWebapiStencil.csproj", "{22A7A2E6-CFD9-4B18-82E4-C6746F84495A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StencilMiddleware", "Middleware\StencilMiddleware.csproj", "{3CAC5943-3CF1-4568-A454-C4A48E4A02A0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D33DD04B-AA9A-4B9D-8D83-D06DB5EA84B1}"
@@ -15,22 +13,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{D156A9D4-8CE4-42E2-8493-F2CF29D280C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetWebapiStencil", "Templates\WebApiStencil\DotnetWebapiStencil.csproj", "{B939CC4F-0396-484D-9B74-47A28DF73FBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet.template.pack", "Templates\dotnet.template.pack.csproj", "{3471711E-7C63-4047-83DD-A0A7F7404775}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{22A7A2E6-CFD9-4B18-82E4-C6746F84495A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{22A7A2E6-CFD9-4B18-82E4-C6746F84495A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{22A7A2E6-CFD9-4B18-82E4-C6746F84495A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{22A7A2E6-CFD9-4B18-82E4-C6746F84495A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3CAC5943-3CF1-4568-A454-C4A48E4A02A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3CAC5943-3CF1-4568-A454-C4A48E4A02A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CAC5943-3CF1-4568-A454-C4A48E4A02A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CAC5943-3CF1-4568-A454-C4A48E4A02A0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D156A9D4-8CE4-42E2-8493-F2CF29D280C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D156A9D4-8CE4-42E2-8493-F2CF29D280C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B939CC4F-0396-484D-9B74-47A28DF73FBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B939CC4F-0396-484D-9B74-47A28DF73FBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B939CC4F-0396-484D-9B74-47A28DF73FBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B939CC4F-0396-484D-9B74-47A28DF73FBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3471711E-7C63-4047-83DD-A0A7F7404775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3471711E-7C63-4047-83DD-A0A7F7404775}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3471711E-7C63-4047-83DD-A0A7F7404775}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3471711E-7C63-4047-83DD-A0A7F7404775}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
