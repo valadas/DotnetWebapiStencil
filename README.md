@@ -15,8 +15,13 @@ This project template provides a starting point for building a .NET WebAPI appli
 
 To install the template, run `dotnet new install Eraware.StencilWebApiTemplate`
 
-To create a project using the template, create a folder using whatever project name you would like, then inside that folder run `dotnet new webapi-stencil-starter`. Alternatively you can use -n to name your project and -o to set the output folder. Ex `dotnet new webapi-stencil-starter -n MyProject -o ./MyProject`
-Then inside the folder simply run `dotnet watch` and you can start coding both the backend and frontent while enjoying live-reload and HMR. If you prefer a Visual Studio workflow you can simply open the project file and Visual Studio will propose making it a solution.
+To create a project using the template, create a folder using whatever project name you would like, then inside that folder run `dotnet new webapi-stencil-starter`.
+
+Alternatively you can use -n to name your project and -o to set the output folder. Ex `dotnet new webapi-stencil-starter -n MyProject -o ./MyProject`
+
+Then inside the folder simply run `dotnet watch` and you can start coding both the backend and frontent while enjoying live-reload and HMR.
+
+If you prefer a Visual Studio workflow you can simply open the project file and Visual Studio will propose making it a solution.
 
 ## Using the Stencil SPA Middleware
 
